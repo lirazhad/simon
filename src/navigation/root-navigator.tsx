@@ -10,7 +10,7 @@ import ScoreScreen from '../screens/score-screen'
 export type RootStackParamList = {
   Home: undefined;
   Game: { userName: string };
-  Score: { userScore: number };
+  Score: { userName: string, userScore: number };
 };
 
 export const RootNavigator = ()=> {

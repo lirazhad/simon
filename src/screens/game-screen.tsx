@@ -3,9 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import { RouteProp, StackActions } from '@react-navigation/native'
 import PlayButton from '../components/play-button'
-import { BUTTON_RADIUS } from '../constants'
+import { BUTTON_RADIUS, DELAY_BETWEEN_STEPS } from '../constants'
 import { StyleSheet, Animated, Text, View, TouchableOpacity, Alert } from 'react-native'
-import getRandomColor from '../utils/getRandomColor'
+import getRandomColor from '../utils/get-random-color'
 import Sound from 'react-native-sound'
 import SoundYellow from '../assets/sounds/yellow.mp3'
 import SoundRed from '../assets/sounds/red.mp3'
@@ -93,7 +93,7 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                     }, 1000);         
                 }
                 preformAction(counter, updatedSteps)
-          }, 1500);
+          }, DELAY_BETWEEN_STEPS);
         }
       }
 
@@ -114,6 +114,7 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                 [
                   {text: 'OK', onPress: () => navigation.dispatch(
                     StackActions.replace('Score', {
+                        userName: userName,
                         userScore: score,
                     })
                   )
