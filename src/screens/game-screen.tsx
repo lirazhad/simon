@@ -6,19 +6,15 @@ import PlayButton from '../components/play-button'
 import { colors, states, playColors, animationProperties, appStyle } from '../constants'
 import { StyleSheet, Animated, Text, View, TouchableOpacity, Alert } from 'react-native'
 import getRandomColor from '../utils/get-random-color'
-import Sound from 'react-native-sound'
-import SoundYellow from '../assets/sounds/yellow.mp3'
-import SoundRed from '../assets/sounds/red.mp3'
-import SoundBlue from '../assets/sounds/blue.mp3'
-import SoundGreen from '../assets/sounds/green.mp3'
-import SoundGameOver from '../assets/sounds/error.wav'
+import playSound from '../utils/sound-manager'
+import { spring } from '../assets/animation'
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Game'>
-type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Game'>;
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Game'>
 type Props = {
     navigation: ProfileScreenNavigationProp
     route: ProfileScreenRouteProp
-  };
+  }
 
 const GameScreen: React.FC<Props> =  ({navigation, route})=> {
   
@@ -27,33 +23,32 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
     const [springAnimYellow] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
     const [springAnimGreen] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
 
-    const [score, setScore] = useState(0);
-    const [gameState, setGameState] = useState(states.START);
-    const [steps, setSteps] = useState<string[]>([]);
-    const [moveIndex, setMoveIndex] = useState(0);
+    const [score, setScore] = useState(0)
+    const [gameState, setGameState] = useState(states.START)
+    const [steps, setSteps] = useState<string[]>([])
+    const [moveIndex, setMoveIndex] = useState(0)
 
-    const [disableUI, setDisableUI] = useState(true);
-    const [disableMainButton, setDisableMainButton] = useState(false);
-    const [userName, setUserName] = useState('');
+    const [disableUI, setDisableUI] = useState(true)
+    const [disableMainButton, setDisableMainButton] = useState(false)
+    const [userName, setUserName] = useState('')
 
     useEffect(()=>{
         setUserName(route.params.userName)
     },[])
 
     const nextMove = () => {
-
         setDisableUI(true)
         setDisableMainButton(true)
 
-        const newStep = getRandomColor();
-        const updatedSteps = [...steps, newStep];
+        const newStep = getRandomColor()
+        const updatedSteps = [...steps, newStep]
 
-        setMoveIndex(0);
-        setGameState(states.PLAYING);
-        setSteps(updatedSteps);
+        setMoveIndex(0)
+        setGameState(states.PLAYING)
+        setSteps(updatedSteps)
 
         preformAction(0, updatedSteps)
-      };
+      }
 
       const preformAction = (counter: number,  updatedSteps: string[]) => {
 
@@ -88,10 +83,10 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                     setTimeout(() => {
                         setDisableUI(false)
                         setGameState(states.TAP)    
-                    }, 1000);         
+                    }, 1000)       
                 }
                 preformAction(counter, updatedSteps)
-          }, animationProperties.DELAY_BETWEEN_STEPS);
+          }, animationProperties.DELAY_BETWEEN_STEPS)
         }
       }
 
@@ -113,7 +108,7 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                   {text: 'OK', onPress: () => navigation.dispatch(
                     StackActions.replace('Score', {
                         userName: userName,
-                        userScore: score,
+                        userScore: score
                     })
                   )
                 }
@@ -122,44 +117,6 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
               )}
       }
  
-      const spring = (springAnim: Animated.Value) => {
-        springAnim.setValue(animationProperties.SPRING_FACTOR)
-        Animated.spring(
-           springAnim,
-          {
-            useNativeDriver: true,
-            toValue: animationProperties.ANIMATION_INITIOAL_VALUE,
-            friction: animationProperties.FRICTION
-          }
-        ).start()
-      }
-
-      const playSound = (soundName: string) => {
-        const sound = new Sound(soundColor(soundName), error => {
-          if (error) {
-            console.log('error');
-          } else {
-            sound.play(() => sound.release());
-          }
-        });
-      };
- 
-
-      const soundColor = (color: string) => {
-        switch (color) {
-          case playColors.YELLOW:
-            return SoundYellow;
-          case playColors.GREEN:
-            return SoundGreen;
-          case playColors.BLUE:
-            return SoundBlue;
-          case playColors.RED:
-            return SoundRed;
-          default:
-            return SoundGameOver;
-        }
-      };
-
     return (
         <View style={styles.mainView}>
             <View style={styles.header}>
@@ -199,8 +156,8 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
             </View>
          
         </View>
-    );
-};
+    )
+}
 
 
 const styles = StyleSheet.create({
@@ -267,4 +224,4 @@ const styles = StyleSheet.create({
 
 
 
-export default GameScreen;
+export default GameScreen

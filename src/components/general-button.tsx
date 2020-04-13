@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { colors, appStyle } from '../constants'
 
 type Props = {
     onPress: () => void
     title: string
-  };
+  }
 
 const GeneralButton: React.FC<Props> =  ({onPress, title})=> {
     return (
@@ -14,8 +14,8 @@ const GeneralButton: React.FC<Props> =  ({onPress, title})=> {
             <Text style={styles.text}>{title}</Text>
         </View>  
         </TouchableOpacity>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
 
 
 
-export default GeneralButton;
+export default GeneralButton

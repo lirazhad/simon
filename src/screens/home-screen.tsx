@@ -1,22 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useState } from 'react'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import GeneralButton from '../components/general-button'
 import { Text, View, TextInput, StyleSheet } from 'react-native'
-import { colors, appStyle } from '../constants';
+import { colors, appStyle } from '../constants'
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Game'
->;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Game'>
 
 type Props = {
-    navigation: ProfileScreenNavigationProp;
-  };
+    navigation: ProfileScreenNavigationProp
+  }
 
 const HomeScreen: React.FC<Props> =  ({navigation})=> {
 
-  const [value, onChangeText] = useState('');
+  const [value, onChangeText] = useState('')
 
     return (
         <View style={styles.mainView}>
@@ -34,8 +31,8 @@ const HomeScreen: React.FC<Props> =  ({navigation})=> {
            title={'Start Game'}>
            </GeneralButton>
         </View>
-    );
-};
+    )
+}
 
 
 const styles = StyleSheet.create({
@@ -61,4 +58,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default HomeScreen;
+export default HomeScreen

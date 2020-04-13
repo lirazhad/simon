@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { appStyle } from '../constants'
 import { StyleSheet, Animated, TouchableOpacity, View } from 'react-native'
 
@@ -7,7 +7,7 @@ type Props = {
     animation: any
     disabled: boolean
     onPressButton: () => void
-  };
+  }
 
 const PlayButton: React.FC<Props> =  ({style, animation, onPressButton, disabled})=> {
     return (
@@ -21,8 +21,8 @@ const PlayButton: React.FC<Props> =  ({style, animation, onPressButton, disabled
                 <View style={[styles.container, style]}/>            
             </TouchableOpacity>
         </Animated.View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     }
   })
 
-export default PlayButton;
+export default PlayButton

@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { colors, appStyle } from '../constants'
 
 type Props = {
     userName: string
-    score: number,
+    score: number
     index: number
-  };
+  }
 
 const ScoreListItem: React.FC<Props> =  ({userName, score, index})=> {
     return (
@@ -17,8 +17,8 @@ const ScoreListItem: React.FC<Props> =  ({userName, score, index})=> {
             </View>
             <Text style={styles.text}>{score}</Text>
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     }
   })
 
-export default ScoreListItem;
+export default ScoreListItem

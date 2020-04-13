@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from 'react'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,14 +8,14 @@ import { FlatList, View, StyleSheet, Text } from 'react-native'
 import { getScoreListFromStorage, storeData } from '../utils/store-local-data'
 import ScoreListItem from '../components/score-list-item'
 import GeneralButton from '../components/general-button'
-import { colors, appStyle } from '../constants';
+import { colors, appStyle } from '../constants'
 
-type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Score'>;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Score'>
 
 type Props = {
-    navigation: ProfileScreenNavigationProp;
+    navigation: ProfileScreenNavigationProp
     route: RouteProp<RootStackParamList, 'Score'>
-  };
+  }
 
 const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
 
@@ -37,7 +37,7 @@ const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
         restoredArray.sort( 
           function( a: any, b: any ) { 
             return b.score - a.score 
-          });
+          })
 
           if(restoredArray.length === 11){
             //remove last 
@@ -46,7 +46,7 @@ const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
 
           restoredArray.forEach((element: any) => {
             dispatch(addToList(element))
-          });
+          })
           storeData(JSON.stringify(restoredArray))
 
       }else{
@@ -81,8 +81,8 @@ const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
           </View>
            
         </View>
-    );
-};
+    )
+}
 
 
 const styles = StyleSheet.create({
