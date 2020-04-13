@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import { RouteProp, StackActions } from '@react-navigation/native'
 import PlayButton from '../components/play-button'
-import { BUTTON_RADIUS, DELAY_BETWEEN_STEPS } from '../constants'
+import { BUTTON_RADIUS, DELAY_BETWEEN_STEPS, colors } from '../constants'
 import { StyleSheet, Animated, Text, View, TouchableOpacity, Alert } from 'react-native'
 import getRandomColor from '../utils/get-random-color'
 import Sound from 'react-native-sound'
@@ -136,7 +136,7 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
         ).start()
       }
 
-      const playSound = soundName => {
+      const playSound = (soundName: string) => {
         const sound = new Sound(soundColor(soundName), error => {
           if (error) {
             console.log('error');
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         padding: 12,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: 'red',
+        backgroundColor: colors.main,
         flexDirection: 'row'
     },
     headerText: {
@@ -254,16 +254,16 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     yellow: {
-        borderBottomRightRadius: BUTTON_RADIUS, backgroundColor: 'yellow'
+        borderBottomRightRadius: BUTTON_RADIUS, backgroundColor: colors.yellow
     },
     red: {
-        borderTopLeftRadius: BUTTON_RADIUS, backgroundColor: 'red'
+        borderTopLeftRadius: BUTTON_RADIUS, backgroundColor: colors.red
     },
     blue: {
-        borderTopRightRadius: BUTTON_RADIUS, backgroundColor: 'blue'
+        borderTopRightRadius: BUTTON_RADIUS, backgroundColor: colors.blue
     },
     green: {
-        borderBottomLeftRadius: BUTTON_RADIUS, backgroundColor: 'green'
+        borderBottomLeftRadius: BUTTON_RADIUS, backgroundColor: colors.green
     },
   })
 

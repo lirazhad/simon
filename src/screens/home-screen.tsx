@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/root-navigator'
-
-import { Text, View, TextInput, Button, StyleSheet } from 'react-native'
+import GeneralButton from '../components/general-button'
+import { Text, View, TextInput, StyleSheet } from 'react-native'
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -24,13 +24,14 @@ const HomeScreen: React.FC<Props> =  ({navigation})=> {
               style={styles.textInput}
               onChangeText={text => onChangeText(text)}
               value={value}/>
-           <Button 
+           <GeneralButton 
            onPress={()=>{
              if(value !== ''){
              navigation.navigate('Game', {userName: value})
              }
             }}
-           title={'Start Game'}/>
+           title={'Start Game'}>
+           </GeneralButton>
         </View>
     );
 };

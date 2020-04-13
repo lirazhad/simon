@@ -1,5 +1,5 @@
 
- const scoreList = (state = [], action) => {
+ const scoreList = (state = [], action: any) => {
     switch (action.type) {
       case 'ADD_TO_SCORE_LIST':
         return state.concat([action.score])
