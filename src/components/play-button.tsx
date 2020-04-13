@@ -1,10 +1,6 @@
-import React, {useEffect} from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/root-navigator'
-import { RouteProp } from '@react-navigation/native';
-
-import { StyleSheet, Animated, TouchableOpacity, View, Platform, Button } from 'react-native'
-
+import React from 'react';
+import { appStyle } from '../constants'
+import { StyleSheet, Animated, TouchableOpacity, View } from 'react-native'
 
 type Props = {
     style: any
@@ -15,7 +11,10 @@ type Props = {
 
 const PlayButton: React.FC<Props> =  ({style, animation, onPressButton, disabled})=> {
     return (
-        <Animated.View style={{ width: 150, height: 150, transform: [{scale: animation}] }}>
+        <Animated.View style={{ 
+            width: appStyle.PLAY_BUTTON_SIZE, 
+            height: appStyle.PLAY_BUTTON_SIZE, 
+            transform: [{scale: animation}] }}>
             <TouchableOpacity 
             onPress={onPressButton}
             disabled={disabled}>
@@ -25,18 +24,11 @@ const PlayButton: React.FC<Props> =  ({style, animation, onPressButton, disabled
     );
 };
 
-
 const styles = StyleSheet.create({
-    animation: {
-        width: 150,
-        height: 150
-    },
     container: {
         width: '100%',
         height: '100%'
     }
   })
-
-
 
 export default PlayButton;

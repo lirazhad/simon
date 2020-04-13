@@ -1,10 +1,11 @@
 
- const scoreList = (state = [], action: any) => {
+ const scoreList = (state: any = [], action: any) => {
     switch (action.type) {
       case 'ADD_TO_SCORE_LIST':
         return state.concat([action.score])
-      case 'REMOVE_FROM_LIST':
-
+      case 'CLEAR_LIST':
+        state = undefined
+      
       default:
         return state
     }

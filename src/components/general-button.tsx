@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { colors } from '../constants'
+import { colors, appStyle } from '../constants'
 
 type Props = {
     onPress: () => void
@@ -21,15 +21,15 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
-        borderRadius: 22,
-        borderColor: colors.main,
-        padding: 8
+        borderWidth: appStyle.BORDER_WIDTH,
+        borderRadius: appStyle.BUTTON_RADIUS,
+        borderColor: colors.MAIN,
+        padding: appStyle.STANDART_PADDING
     },
     text: {
-        fontSize: 20,
-        color: colors.main,
-        marginHorizontal: 16
+        fontSize: appStyle.LARGE_FONT,
+        color: colors.MAIN,
+        marginHorizontal: appStyle.BUTTON_HORIZONTAL_MARGIN
     }
   })
 

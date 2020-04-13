@@ -2,12 +2,13 @@ import React, {useEffect} from 'react';
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import { useSelector, useDispatch } from 'react-redux'
-import { RouteProp } from '@react-navigation/native'
-import { addToList } from '../store'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { RouteProp, StackActions } from '@react-navigation/native'
+import { addToList, clearList } from '../store'
+import { FlatList, View, StyleSheet, Text } from 'react-native'
 import { getScoreListFromStorage, storeData } from '../utils/store-local-data'
 import ScoreListItem from '../components/score-list-item'
 import GeneralButton from '../components/general-button'
+import { colors, appStyle } from '../constants';
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Score'>;
 
@@ -29,28 +30,27 @@ const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
   getScoreListFromStorage().then((listFromStorage: string | undefined) => {
     const currentScore = {userName, score}
       if(listFromStorage !== undefined){
+        dispatch(clearList())
         let restoredArray = JSON.parse(listFromStorage)
         restoredArray.push(currentScore)
 
         restoredArray.sort( 
           function( a: any, b: any ) { 
-            return a.score - b.score 
+            return b.score - a.score 
           });
 
-          if(restoredArray.lenght === 11){
+          if(restoredArray.length === 11){
             //remove last 
             restoredArray.splice(-1,1)
           }
 
           restoredArray.forEach((element: any) => {
             dispatch(addToList(element))
-            console.warn(element)
           });
           storeData(JSON.stringify(restoredArray))
 
       }else{
         //empty list
-        console.warn(currentScore)
         dispatch(addToList(currentScore))
         let listToStore = [currentScore]
         storeData(JSON.stringify(listToStore))
@@ -61,18 +61,23 @@ const ScoreScreen: React.FC<Props> =  ({navigation, route})=> {
  
 
     return (
-        <View>
+        <View style={styles.mainView}> 
           <View style={styles.header}> 
             <GeneralButton 
-              onPress={()=>navigation.navigate('Game', {userName: userName})}
+              onPress={()=>navigation.dispatch(
+                StackActions.replace('Game', {userName: userName})
+              )}
               title={'SART NEW GAME'}/>
+              <Text style={styles.score}>{'Your Score is: ' + score}</Text>
           </View>
           <View style={styles.body}>
             <FlatList 
               data={scoreList}
-              renderItem = {({ item }: { item: any }) => (
-              <ScoreListItem userName={item.userName} score={item.score}/>
-              )}/>
+              renderItem = {({ item, index }: { item: any, index: number }) => (
+              <ScoreListItem userName={item.userName} score={item.score} index={index+1}/>
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              />
           </View>
            
         </View>
@@ -84,14 +89,24 @@ const styles = StyleSheet.create({
   mainView: {
     width: '100%', 
     height: '100%', 
+    paddingTop: appStyle.LARGE_PADDING,
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  header: {
+    margin: appStyle.LARGE_MARGIN,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  header: {
-    margin: 22
+  score: {
+    margin: appStyle.STANDART_MARGIN,
+    fontSize: appStyle.LARGE_FONT,
+    color: colors.ACCENT
   },
   body: {
-    margin: 22,
+    width: '100%',
+    marginVertical: appStyle.LARGE_MARGIN
   }
 })
 

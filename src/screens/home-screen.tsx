@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/root-navigator'
 import GeneralButton from '../components/general-button'
 import { Text, View, TextInput, StyleSheet } from 'react-native'
+import { colors, appStyle } from '../constants';
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -45,17 +46,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    fontSize: 18,
-    margin: 12
+    fontSize: appStyle.LARGE_FONT,
+    margin: appStyle.LARGE_MARGIN,
+    color: colors.ACCENT
   },
   textInput: {
-    width: 300, 
-    borderColor: 'gray', 
-    borderRadius: 18,
-    borderWidth: 1, 
-    height: 40,
-    margin: 12,
-    paddingHorizontal: 18
+    width: appStyle.INPUT_WIDTH, 
+    borderColor: colors.GRAY, 
+    borderRadius: appStyle.TEXT_INPUT_RADIUS,
+    borderWidth: appStyle.BORDER_WIDTH, 
+    height: appStyle.TEXT_INPUT_HEIGHT,
+    margin: appStyle.LARGE_MARGIN,
+    paddingHorizontal: appStyle.LARGE_PADDING
   },
 })
 

@@ -15,38 +15,28 @@ export type RootStackParamList = {
 
 export const RootNavigator = ()=> {
 
-const RootStack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator<RootStackParamList>()
 
-//type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
-
-type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-
-type Props = {
-  //route: ProfileScreenRouteProp;
-  navigation: ProfileScreenNavigationProp;
-};
-
-
-return (
-  <NavigationContainer>
-    <RootStack.Navigator 
-    screenOptions={{
-      headerShown: false
-    }}
-    initialRouteName="Home">
-      <RootStack.Screen 
-      name="Home" 
-      component={HomeScreen} />
-      <RootStack.Screen
-        name="Game"
-        component={GameScreen}
-      />
-      <RootStack.Screen 
-        name="Score" 
-        component={ScoreScreen} />
-  </RootStack.Navigator>
-  </NavigationContainer>
-);
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator 
+      screenOptions={{
+        headerShown: false
+      }}
+      initialRouteName="Home">
+        <RootStack.Screen 
+        name="Home" 
+        component={HomeScreen} />
+        <RootStack.Screen
+          name="Game"
+          component={GameScreen}
+        />
+        <RootStack.Screen 
+          name="Score" 
+          component={ScoreScreen} />
+    </RootStack.Navigator>
+    </NavigationContainer>
+  )
 
 }
 

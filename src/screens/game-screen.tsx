@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../navigation/root-navigator'
 import { RouteProp, StackActions } from '@react-navigation/native'
 import PlayButton from '../components/play-button'
-import { BUTTON_RADIUS, DELAY_BETWEEN_STEPS, colors } from '../constants'
+import { colors, states, playColors, animationProperties, appStyle } from '../constants'
 import { StyleSheet, Animated, Text, View, TouchableOpacity, Alert } from 'react-native'
 import getRandomColor from '../utils/get-random-color'
 import Sound from 'react-native-sound'
@@ -21,21 +21,15 @@ type Props = {
   };
 
 const GameScreen: React.FC<Props> =  ({navigation, route})=> {
-    const states = {
-        START: 'start',
-        PLAYING: 'playing',
-        TAP: 'tap',
-      };
-
   
-    const [springAnimRed] = useState(new Animated.Value(1))  
-    const [springAnimBlue] = useState(new Animated.Value(1))  
-    const [springAnimYellow] = useState(new Animated.Value(1))  
-    const [springAnimGreen] = useState(new Animated.Value(1))  
+    const [springAnimRed] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
+    const [springAnimBlue] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
+    const [springAnimYellow] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
+    const [springAnimGreen] = useState(new Animated.Value(animationProperties.ANIMATION_INITIOAL_VALUE))  
 
     const [score, setScore] = useState(0);
     const [gameState, setGameState] = useState(states.START);
-    const [steps, setSteps] = useState([]);
+    const [steps, setSteps] = useState<string[]>([]);
     const [moveIndex, setMoveIndex] = useState(0);
 
     const [disableUI, setDisableUI] = useState(true);
@@ -66,23 +60,27 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
         if(counter < updatedSteps.length){
           setTimeout(function(){
             playSound(updatedSteps[counter])
-                   let animation
+                let animation
                 switch(updatedSteps[counter]){
-                    case 'red':
+                    case playColors.RED:
                         animation = springAnimRed
-                    break
+                      break
 
-                    case 'blue':
+                    case playColors.BLUE:
                         animation = springAnimBlue
-                    break
+                      break
 
-                    case 'green':
+                    case playColors.GREEN:
                         animation = springAnimGreen
-                    break
+                      break
 
-                    case 'yellow':
+                    case playColors.YELLOW:
                         animation = springAnimYellow
-                    break
+                      break
+
+                    default: 
+                    animation = springAnimYellow
+
                 }
                 spring(animation)
                 counter++
@@ -93,7 +91,7 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                     }, 1000);         
                 }
                 preformAction(counter, updatedSteps)
-          }, DELAY_BETWEEN_STEPS);
+          }, animationProperties.DELAY_BETWEEN_STEPS);
         }
       }
 
@@ -124,14 +122,14 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
               )}
       }
  
-      const spring = (springAnim) => {
-        springAnim.setValue(1.3)
+      const spring = (springAnim: Animated.Value) => {
+        springAnim.setValue(animationProperties.SPRING_FACTOR)
         Animated.spring(
            springAnim,
           {
             useNativeDriver: true,
-            toValue: 1,
-            friction: 3
+            toValue: animationProperties.ANIMATION_INITIOAL_VALUE,
+            friction: animationProperties.FRICTION
           }
         ).start()
       }
@@ -147,15 +145,15 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
       };
  
 
-      const soundColor = color => {
+      const soundColor = (color: string) => {
         switch (color) {
-          case 'yellow':
+          case playColors.YELLOW:
             return SoundYellow;
-          case 'green':
+          case playColors.GREEN:
             return SoundGreen;
-          case 'blue':
+          case playColors.BLUE:
             return SoundBlue;
-          case 'red':
+          case playColors.RED:
             return SoundRed;
           default:
             return SoundGameOver;
@@ -173,22 +171,22 @@ const GameScreen: React.FC<Props> =  ({navigation, route})=> {
                     style={styles.red} 
                     animation={springAnimRed}
                     disabled={disableUI}
-                    onPressButton={() => onPressButton('red')}/>
+                    onPressButton={() => onPressButton(playColors.RED)}/>
                 <PlayButton 
                     style={styles.blue} 
                     animation={springAnimBlue}
                     disabled={disableUI}
-                    onPressButton={() => onPressButton('blue')}/>
+                    onPressButton={() => onPressButton(playColors.BLUE)}/>
                 <PlayButton 
                     style={styles.green} 
                     animation={springAnimGreen}
                     disabled={disableUI}
-                    onPressButton={() => onPressButton('green')}/>
+                    onPressButton={() => onPressButton(playColors.GREEN)}/>
                 <PlayButton 
                     style={styles.yellow} 
                     animation={springAnimYellow}
                     disabled={disableUI}
-                    onPressButton={() => onPressButton('yellow')}/>
+                    onPressButton={() => onPressButton(playColors.YELLOW)}/>
                 <View style={styles.mainButtonContainer}>
                     <TouchableOpacity
                         disabled={disableMainButton}
@@ -214,24 +212,24 @@ const styles = StyleSheet.create({
     },
     header:{
         width: '100%',
-        height: 64,
+        height: appStyle.HEADER_HEIGHT,
         position: 'absolute',
         top: 0,
-        padding: 12,
+        padding: appStyle.LARGE_PADDING,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: colors.main,
+        backgroundColor: colors.MAIN,
         flexDirection: 'row'
     },
     headerText: {
-        color: 'white',
-        fontSize: 20,
-        margin: 12
+        color: colors.WHITE,
+        fontSize: appStyle.LARGE_FONT,
+        margin: appStyle.LARGE_MARGIN
     },
     boardPlay: {
-        width: 300,
-        height: 300,
-        borderRadius: BUTTON_RADIUS,
+        width: appStyle.BOARD_GAME_SIZE,
+        height: appStyle.BOARD_GAME_SIZE,
+        borderRadius: appStyle.PLAY_BUTTON_SIZE,
         flexDirection: 'row',
         flexWrap: 'wrap'
     },
@@ -243,27 +241,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     mainButton: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        backgroundColor: 'black',
+        width: appStyle.MAIN_BUTTON_SIZE,
+        height: appStyle.MAIN_BUTTON_SIZE,
+        borderRadius: appStyle.MAIN_BUTTON_RADIUS,
+        backgroundColor: colors.BLACK,
         alignItems: 'center',
         justifyContent: 'center'
     },
     mainButtonText: {
-        color: 'white'
+        color: colors.WHITE
     },
     yellow: {
-        borderBottomRightRadius: BUTTON_RADIUS, backgroundColor: colors.yellow
+        borderBottomRightRadius: appStyle.PLAY_BUTTON_SIZE, backgroundColor: colors.YELLOW
     },
     red: {
-        borderTopLeftRadius: BUTTON_RADIUS, backgroundColor: colors.red
+        borderTopLeftRadius: appStyle.PLAY_BUTTON_SIZE, backgroundColor: colors.RED
     },
     blue: {
-        borderTopRightRadius: BUTTON_RADIUS, backgroundColor: colors.blue
+        borderTopRightRadius: appStyle.PLAY_BUTTON_SIZE, backgroundColor: colors.BLUE
     },
     green: {
-        borderBottomLeftRadius: BUTTON_RADIUS, backgroundColor: colors.green
+        borderBottomLeftRadius: appStyle.PLAY_BUTTON_SIZE, backgroundColor: colors.GREEN
     },
   })
 

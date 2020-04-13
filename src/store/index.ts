@@ -11,3 +11,9 @@ export function addToList(score: any) {
     }
   }
 
+
+  export function clearList() {
+    return {
+      type: 'CLEAR_LIST'
+    }
+  }

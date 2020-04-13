@@ -1,5 +1,7 @@
+import { playColors } from '../constants'
+
 export default function getRandomColor() {
-    const colors = ['yellow', 'red', 'blue', 'green']
+    const colors = [playColors.YELLOW, playColors.RED, playColors.BLUE, playColors.GREEN]
     const colorIndex = Math.floor(Math.random() * colors.length)
     return colors[colorIndex]
   }
